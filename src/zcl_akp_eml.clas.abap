@@ -24,13 +24,13 @@ ENDCLASS.
 
 
 
-CLASS ZCL_AKP_EML IMPLEMENTATION.
+CLASS zcl_akp_eml IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
 
-    eml_read( out ).
-*    eml_read_by_association( out ).
+*    eml_read( out ).
+    eml_read_by_association( out ).
 
 *    eml_update( out ).
 *    eml_create( out ).
@@ -92,7 +92,6 @@ CLASS ZCL_AKP_EML IMPLEMENTATION.
     ALL FIELDS WITH VALUE #( ( %key-TravelID = '00000004' ) )
     RESULT FINAL(travel_Booking_Data)
 
-
     ENTITY Booking
     ALL FIELDS WITH VALUE #( ( %key-TravelID = '00000002' %key-BookingID = '0001') )
     RESULT DATA(bookingData)
@@ -117,6 +116,12 @@ CLASS ZCL_AKP_EML IMPLEMENTATION.
         data = bookingdata
         name = 'Booking data :'
     ).
+
+    READ ENTITIES OF /DMO/I_Travel_U
+    ENTITY Travel
+    BY \_Booking              "Read by association
+    ALL FIELDS WITH VALUE #( ( %key-TravelID = '00000004' ) )
+    LINK DATA(rba_travel_booking_linkeddata).
   ENDMETHOD.
 
 
